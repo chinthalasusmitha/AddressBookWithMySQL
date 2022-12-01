@@ -1,3 +1,5 @@
+---------------------------------------------------------------UC-1------------------------------------------------------
+
 Ability to create a Address Book Service DB
 
 ---------------------------------------------------------------UC-1------------------------------------------------------
@@ -19,3 +21,235 @@ mysql> show databases;
 | world               |
 +---------------------+
 9 rows in set (0.01 sec)
+---------------------------------------------------------------UC-2------------------------------------------------------
+
+Ability to create a Address Book Table with first and last names, address, city, state, zip, phone number and email as its attributes
+
+---------------------------------------------------------------UC-2------------------------------------------------------
+
+mysql> create table addressbook
+    -> (
+    ->  FirstName VARCHAR(50) NOT NUll,
+    ->  LastName VARCHAR(50) NOT NUll,
+    ->  Address VARCHAR(40) NOT NUll,
+    ->  City VARCHAR(40) NOT NUll,
+    ->  State VARCHAR(40) NOT NUll,
+    ->  Zip INT NOT NUll,
+    ->  PhoneNumber VARCHAR(10) NOT NUll,
+    ->  Email VARCHAR(40) NOT NUll,
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> describe addressbook;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| FirstName   | varchar(50) | NO   |     | NULL    |       |
+| LastName    | varchar(50) | NO   |     | NULL    |       |
+| Address     | varchar(40) | NO   |     | NULL    |       |
+| City        | varchar(40) | NO   |     | NULL    |       |
+| State       | varchar(40) | NO   |     | NULL    |       |
+| Zip         | int         | NO   |     | NULL    |       |
+| PhoneNumber | varchar(10) | NO   |     | NULL    |       |
+| Email       | varchar(40) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+---------------------------------------------------------------UC-3------------------------------------------------------
+Ability to insert new Contacts to Address Book
+---------------------------------------------------------------UC-3------------------------------------------------------
+
+mysql> INSERT INTO addressbook(FirstName,LastName,Address,City,State,Zip,PhoneNumber,Email) VALUES
+    -> ('Pinky','Reddy','Karimnagar','Karimnagar','Telangana',505001,'9949717712','pinky123@gmail.com'),
+    -> ('chinky','Reddy','Karimnagar','Karimnagar','Telangana',505001,'9849343893','chinky123@gmail.com'),
+    -> ('Mansi','Reddy','Karimnagar','Karimnagar','Telangana',505001,'9999999992','Mansi123@gmail.com');
+
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  |
+| chinky    | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9849343893  | chinky123@gmail.com |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+3 rows in set (0.00 sec)
+
+---------------------------------------------------------------UC-4------------------------------------------------------
+Ability to edit existing contact person using their name
+---------------------------------------------------------------UC-4------------------------------------------------------
+
+mysql>  update addressbook set PhoneNumber = '9949717712' where FirstName = 'Pinky';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email              |
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com |
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+2 rows in set (0.00 sec)
+
+---------------------------------------------------------------UC-5------------------------------------------------------
+Ability to delete a person using person's name
+---------------------------------------------------------------UC-5------------------------------------------------------
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  |
+| chinky    | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999949343  | chinky123@gmail.com |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> delete from addressbook where FirstName = 'chinky';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email              |
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com |
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+2 rows in set (0.00 sec)
+
+------------------------------------------------------------------UC-6-------------------------------------------------------------
+
+Ability to Retrieve Person belonging to a City or State from the Address Book
+
+------------------------------------------------------------------UC-6-------------------------------------------------------------
+
+mysql> select * from addressbook where city = 'Karimnagar' or state = 'Telanagana';
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email              |
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com |
++-----------+----------+------------+------------+-----------+--------+-------------+--------------------+
+2 rows in set (0.00 sec)
+
+------------------------------------------------------------------UC-7-------------------------------------------------------------------
+Ability to understand the size of address book by City and State
+------------------------------------------------------------------UC-7-------------------------------------------------------------
+mysql> select count(city),count(state) from addressbook;
++-------------+--------------+
+| count(city) | count(state) |
++-------------+--------------+
+|           2 |            2 |
++-------------+--------------+
+1 row in set (0.01 sec)
+
+
+--------------------------------------------------------------------UC-8-------------------------------------------------------------------
+
+Ability to retrieve entries sorted alphabetically by Person’s name for a given city
+--------------------------------------------------------------------UC-8-------------------------------------------------------------------
+
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  |
+| chinni    | Reddy    | Bachupally | Hyderabad  | Telangana | 500090 | 9949715642  | chinni123@gmail.com |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from addressbook order by FirstName;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+| chinni    | Reddy    | Bachupally | Hyderabad  | Telangana | 500090 | 9949715642  | chinni123@gmail.com |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  |
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+
+3 rows in set (0.00 sec)
+
+--------------------------------------------------------------------UC-9---------------------------------------------------------------
+
+Ability to identify each Address Book with name and
+Type. - Here the type could Family, Friends, Profession, etc
+- Alter Address Book to add name and type
+--------------------------------------------------------------------UC-9---------------------------------------------------------------
+
+mysql> Alter table addressbook add name Varchar(30);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Alter table addressbook add Type Varchar(30);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+------+------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               | name | Type |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+------+------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  | NULL | NULL |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  | NULL | NULL |
+| chinni    | Reddy    | Bachupally | Hyderabad  | Telangana | 500090 | 9949715642  | chinni123@gmail.com | NULL | NULL |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> update addressbook set Type = 'Family' where FirstName='Pinky';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set Type = 'Friends' where FirstName='Mansi';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set Type = 'Profession' where FirstName='chinni';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+------+------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               | name | Type       |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+------+------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  | NULL | Family     |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  | NULL | Friends    |
+| chinni    | Reddy    | Bachupally | Hyderabad  | Telangana | 500090 | 9949715642  | chinni123@gmail.com | NULL | Profession |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+------+------------+
+3 rows in set (0.00 sec)
+
+--------------------------------------------------------------------UC-10---------------------------------------------------------------
+Ability to get number of contact persons i.e. count by type
+--------------------------------------------------------------------UC-10---------------------------------------------------------------
+
+mysql> select count(type),count(PhoneNumber) from addressbook;
++-------------+--------------------+
+| count(type) | count(PhoneNumber) |
++-------------+--------------------+
+|           3 |                  3 |
++-------------+--------------------+
+1 row in set (0.00 sec)
+
+--------------------------------------------------------------------UC-11---------------------------------------------------------------
+Ability to add person to both Friend and Family
+--------------------------------------------------------------------UC-11---------------------------------------------------------------
+mysql> update addressbook set name = 'Person' where Type='Friends';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set name = 'Person' where Type='Family';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+--------+------------+
+| FirstName | LastName | Address    | City       | State     | Zip    | PhoneNumber | Email               | name   | Type       |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+--------+------------+
+| Pinky     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9949717712  | pinky123@gmail.com  | Person | Family     |
+| Mansi     | Reddy    | Karimnagar | Karimnagar | Telangana | 505001 | 9999999992  | mansi123@gmail.com  | Person | Friends    |
+| chinni    | Reddy    | Bachupally | Hyderabad  | Telangana | 500090 | 9949715642  | chinni123@gmail.com | NULL   | Profession |
++-----------+----------+------------+------------+-----------+--------+-------------+---------------------+--------+------------+
+3 rows in set (0.00 sec)
